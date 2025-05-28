@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bejelentkezés – Herochat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #3a0ca3, #4361ee, #7209b7);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      margin: auto;
+      margin-top: 8vh;
+      margin-bottom: 4vh;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    input {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 40px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ccc;
+      font-size: 1rem;
+    }
+
+    .robot-check {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 1rem;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    input[type="submit"] {
+      background-color: #5f0f40;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-bottom: 0.5rem;
+      border: none;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #9a0680;
+    }
+
+    .back-link {
+      margin-top: 1rem;
+      display: inline-block;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      opacity: 0.85;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #ffd6f9;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.3);
+      text-align: center;
+      padding: 1rem;
+      backdrop-filter: blur(10px);
+      margin-top: auto;
+      font-size: 0.9rem;
+    }
+
+    .social-icons {
+      margin-bottom: 0.5rem;
+    }
+
+    .social-icons a {
+      color: #ffffff;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #ffb3f3;
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .login-container {
+        padding: 1.5rem;
+        margin-top: 10vh;
+      }
+
+      input {
+        font-size: 0.95rem;
+      }
+
+      .toggle-password {
+        font-size: 0.9rem;
+        right: 10px;
+      }
+
+      footer {
+        font-size: 0.8rem;
+        padding: 0.75rem;
+      }
+
+      .social-icons a {
+        font-size: 1.3rem;
+        margin: 0 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Bejelentkezés</h2>
+    <form onsubmit="return checkRobot()" method="post">
+      <input type="text" placeholder="Felhasználónév" required />
+      <div class="password-wrapper">
+        <input type="password" placeholder="Jelszó" id="passwordInput" required />
+        <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+      </div>
+      <div class="robot-check">
+        <input type="checkbox" id="robotCheck" required />
+        <label for="robotCheck">Nem vagyok robot</label>
+      </div>
+      <input type="submit" value="Bejelentkezés" />
+    </form>
+    <a class="back-link" href="index.html">← Vissza a főoldalra</a>
+  </div>
+
+  <footer>
+    <div class="social-icons">
+      <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+      <a href="https://instagram.com/andras.hm" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+    &copy; 2025 Herochat • Minden jog fenntartva
+  </footer>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById('passwordInput');
+      const icon = document.querySelector('.toggle-password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    function checkRobot() {
+      const robotCheck = document.getElementById('robotCheck');
+      if (!robotCheck.checked) {
+        alert('Kérlek erősítsd meg, hogy nem vagy robot!');
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
